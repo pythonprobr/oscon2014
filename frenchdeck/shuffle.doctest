@@ -1,0 +1,51 @@
+=========
+Shuffling
+=========
+
+Python's ``random.shuffle`` function::
+
+    >>> from random import shuffle
+    >>> l = list(range(16))
+    >>> l2 = l[:]
+    >>> l2
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    >>> shuffle(l)
+    >>> l == l2  # 1/16! -> 4.7e-14 chance of match
+    False
+
+
+We can't really test this in a platform-independent way::
+
+    >>> l  # doctest: +SKIP
+    [6, 14, 1, 8, 11, 2, 3, 5, 10, 0, 9, 7, 4, 15, 12, 13]
+
+
+Assume ``random.shuffle`` works as documented. 
+
+For testing purposes, we use a fake shuffle::
+
+    >>> def pair_swap(seq):
+    ...     for i in range(0, len(seq), 2):
+    ...         seq[i], seq[i+1] = seq[i+1], seq[i]
+    ...
+    >>> l = list(range(10))
+    >>> pair_swap(l)
+    >>> l
+    [1, 0, 3, 2, 5, 4, 7, 6, 9, 8]
+
+
+==================
+Shuffling the deck
+==================
+
+    >>> from frenchdeck import FrenchDeck
+    >>> deck = FrenchDeck()
+    >>> pair_swap(deck)
+    >>> for card in deck[:6]:  # doctest: +SKIP
+    ...     print(card)
+    Card(rank='3', suit='spades')
+    Card(rank='2', suit='spades')
+    Card(rank='5', suit='spades')
+    Card(rank='4', suit='spades')
+    Card(rank='7', suit='spades')
+    Card(rank='6', suit='spades')
