@@ -1,8 +1,9 @@
 import collections
+from collections import abc
 
 Card = collections.namedtuple('Card', ['rank', 'suit'])
 
-class FrenchDeck:
+class FrenchDeck(abc.MutableSequence):
     ranks = [str(n) for n in range(2, 11)] + list('JQKA')
     suits = 'spades diamonds clubs hearts'.split()
 

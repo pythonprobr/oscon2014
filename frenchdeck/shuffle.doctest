@@ -41,7 +41,7 @@ Shuffling the deck
     >>> from frenchdeck import FrenchDeck
     >>> deck = FrenchDeck()
     >>> pair_swap(deck)
-    >>> for card in deck[:6]:  # doctest: +SKIP
+    >>> for card in deck[:6]:
     ...     print(card)
     Card(rank='3', suit='spades')
     Card(rank='2', suit='spades')
