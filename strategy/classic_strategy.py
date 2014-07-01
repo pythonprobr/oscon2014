@@ -21,6 +21,9 @@
     ...               for item_code in range(10)]
     >>> Order(joe, long_order, LargeOrderPromo())  # <8>
     <Order total: 10.00 due: 9.30>
+    >>> Order(joe, cart, LargeOrderPromo())
+    <Order total: 42.00 due: 42.00>
+
 
 # END CLASSIC_STRATEGY_TESTS
 """
@@ -98,5 +101,6 @@ class LargeOrderPromo(Promotion):  # third Concrete Strategy
         distinct_items = {item.product for item in order.cart}
         if len(distinct_items) >= 10:
             return order.total() * .07
+        return 0
 
 # END CLASSIC_STRATEGY
