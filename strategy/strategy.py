@@ -1,43 +1,32 @@
-# classic_strategy.py
-# Strategy pattern -- classic implementation
+# strategy.py
+# Strategy pattern -- function-based implementation
 
 """
-# BEGIN CLASSIC_STRATEGY_TESTS
+# BEGIN STRATEGY_TESTS
 
     >>> joe = Customer('John Doe', 0)  # <1>
     >>> ann = Customer('Ann Smith', 1100)
-    >>> cart = [LineItem('banana', 4, .5),  # <2>
+    >>> cart = [LineItem('banana', 4, .5),
     ...         LineItem('apple', 10, 1.5),
     ...         LineItem('watermellon', 5, 5.0)]
-    >>> Order(joe, cart, fidelity_promo)  # <3>
+    >>> Order(joe, cart, fidelity_promo)  # <2>
     <Order total: 42.00 due: 42.00>
-    >>> Order(ann, cart, fidelity_promo)  # <4>
+    >>> Order(ann, cart, fidelity_promo)
     <Order total: 42.00 due: 39.90>
-    >>> banana_cart = [LineItem('banana', 30, .5),  # <5>
+    >>> banana_cart = [LineItem('banana', 30, .5),
     ...                LineItem('apple', 10, 1.5)]
-    >>> Order(joe, banana_cart, bulk_item_promo)  # <6>
+    >>> Order(joe, banana_cart, bulk_item_promo)  # <3>
     <Order total: 30.00 due: 28.50>
-    >>> long_order = [LineItem(str(item_code), 1, 1.0) # <7>
+    >>> long_order = [LineItem(str(item_code), 1, 1.0)
     ...               for item_code in range(10)]
-    >>> Order(joe, long_order, large_order_promo)  # <8>
+    >>> Order(joe, long_order, large_order_promo)  # <4>
     <Order total: 10.00 due: 9.30>
     >>> Order(joe, cart, large_order_promo)
     <Order total: 42.00 due: 42.00>
 
-Best promo tests:
-
-    >>> Order(joe, long_order, best_promo)
-    <Order total: 10.00 due: 9.30>
-    >>> Order(joe, banana_cart, best_promo)
-    <Order total: 30.00 due: 28.50>
-    >>> Order(ann, cart, best_promo)
-    <Order total: 42.00 due: 39.90>
-
-
-
-# END CLASSIC_STRATEGY_TESTS
+# END STRATEGY_TESTS
 """
-# BEGIN CLASSIC_STRATEGY
+# BEGIN STRATEGY
 from collections import namedtuple
 
 Customer = namedtuple('Customer', 'name fidelity')
@@ -70,7 +59,7 @@ class Order:  # the Context
         if self.promotion is None:
             discount = 0
         else:
-            discount = self.promotion(self)
+            discount = self.promotion(self)  # <1>
         return self.total() - discount
 
     def __repr__(self):
@@ -78,7 +67,7 @@ class Order:  # the Context
         return fmt.format(self.total(), self.due())
 
 
-def fidelity_promo(order):
+def fidelity_promo(order):  # <2>
     """5% discount for customers with 1000 or more fidelity points"""
     return order.total() * .05 if order.customer.fidelity >= 1000 else 0
 
@@ -98,17 +87,4 @@ def large_order_promo(order):
     if len(distinct_items) >= 10:
         return order.total() * .07
     return 0
-
-
-def best_promo(order):
-    """Select best discount available
-    """
-    promos = [fidelity_promo, bulk_item_promo, large_order_promo]
-    return max(promo(order) for promo in promos)
-
-
-
-
-
-
-# END CLASSIC_STRATEGY
+# END STRATEGY
