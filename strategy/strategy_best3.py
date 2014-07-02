@@ -1,31 +1,30 @@
-# classic_strategy.py
-# Strategy pattern -- classic implementation
+# strategy_best3.py
+# Strategy pattern -- function-based implementation
+# selecting best promotion from imported module
 
 """
-# BEGIN CLASSIC_STRATEGY_TESTS
-
-    >>> from promos import *
-    >>> joe = Customer('John Doe', 0)  # <1>
+    >>> from promotions import *
+    >>> joe = Customer('John Doe', 0)
     >>> ann = Customer('Ann Smith', 1100)
-    >>> cart = [LineItem('banana', 4, .5),  # <2>
+    >>> cart = [LineItem('banana', 4, .5),
     ...         LineItem('apple', 10, 1.5),
     ...         LineItem('watermellon', 5, 5.0)]
-    >>> Order(joe, cart, fidelity_promo)  # <3>
+    >>> Order(joe, cart, fidelity_promo)
     <Order total: 42.00 due: 42.00>
-    >>> Order(ann, cart, fidelity_promo)  # <4>
+    >>> Order(ann, cart, fidelity_promo)
     <Order total: 42.00 due: 39.90>
-    >>> banana_cart = [LineItem('banana', 30, .5),  # <5>
+    >>> banana_cart = [LineItem('banana', 30, .5),
     ...                LineItem('apple', 10, 1.5)]
-    >>> Order(joe, banana_cart, bulk_item_promo)  # <6>
+    >>> Order(joe, banana_cart, bulk_item_promo)
     <Order total: 30.00 due: 28.50>
-    >>> long_order = [LineItem(str(item_code), 1, 1.0) # <7>
+    >>> long_order = [LineItem(str(item_code), 1, 1.0)
     ...               for item_code in range(10)]
-    >>> Order(joe, long_order, large_order_promo)  # <8>
+    >>> Order(joe, long_order, large_order_promo)
     <Order total: 10.00 due: 9.30>
     >>> Order(joe, cart, large_order_promo)
     <Order total: 42.00 due: 42.00>
 
-Best promo tests:
+# BEGIN STRATEGY_BEST_TESTS
 
     >>> Order(joe, long_order, best_promo)
     <Order total: 10.00 due: 9.30>
@@ -34,17 +33,16 @@ Best promo tests:
     >>> Order(ann, cart, best_promo)
     <Order total: 42.00 due: 39.90>
 
-
-
-# END CLASSIC_STRATEGY_TESTS
+# END STRATEGY_BEST_TESTS
 """
-# BEGIN CLASSIC_STRATEGY
+
 from collections import namedtuple
 import inspect
 
-import promos
+import promotions
 
 Customer = namedtuple('Customer', 'name fidelity')
+
 
 class LineItem:
 
@@ -80,13 +78,14 @@ class Order:  # the Context
         fmt = '<Order total: {:.2f} due: {:.2f}>'
         return fmt.format(self.total(), self.due())
 
+# BEGIN STRATEGY_BEST3
+
+promos = [func for name, func in
+                inspect.getmembers(promotions, inspect.isfunction)]
 
 def best_promo(order):
     """Select best discount available
     """
-    discounters = [func for name, func in
-                    inspect.getmembers(promos, inspect.isfunction)]
+    return max(promo(order) for promo in promos)
 
-    return max(promo(order) for promo in discounters)
-
-# END CLASSIC_STRATEGY
+# END STRATEGY_BEST3

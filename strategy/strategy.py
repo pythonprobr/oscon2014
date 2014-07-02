@@ -27,6 +27,7 @@
 # END STRATEGY_TESTS
 """
 # BEGIN STRATEGY
+
 from collections import namedtuple
 
 Customer = namedtuple('Customer', 'name fidelity')
@@ -87,4 +88,5 @@ def large_order_promo(order):
     if len(distinct_items) >= 10:
         return order.total() * .07
     return 0
+
 # END STRATEGY

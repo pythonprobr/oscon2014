@@ -24,10 +24,10 @@
     >>> Order(joe, cart, LargeOrderPromo())
     <Order total: 42.00 due: 42.00>
 
-
 # END CLASSIC_STRATEGY_TESTS
 """
 # BEGIN CLASSIC_STRATEGY
+
 from abc import ABCMeta, abstractmethod
 from collections import namedtuple
 
