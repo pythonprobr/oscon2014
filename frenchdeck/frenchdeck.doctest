@@ -4,14 +4,12 @@ Basic operations
 
 Create and inspect one card::
 
-    >>> from frenchdeck import Card
     >>> beer_card = Card('7', 'diamonds')
     >>> beer_card
     Card(rank='7', suit='diamonds')
 
 Create deck, check length, fetch cards::
 
-    >>> from frenchdeck import FrenchDeck
     >>> deck = FrenchDeck()
     >>> len(deck)
     52

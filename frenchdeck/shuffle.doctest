@@ -20,7 +20,7 @@ We can't really test this in a platform-independent way::
     [6, 14, 1, 8, 11, 2, 3, 5, 10, 0, 9, 7, 4, 15, 12, 13]
 
 
-Assume ``random.shuffle`` works as documented. 
+We can assume ``random.shuffle`` works as documented. 
 
 For testing purposes, we use a fake shuffle::
 
@@ -38,7 +38,6 @@ For testing purposes, we use a fake shuffle::
 Shuffling the deck
 ==================
 
-    >>> from frenchdeck import FrenchDeck
     >>> deck = FrenchDeck()
     >>> pair_swap(deck)
     >>> for card in deck[:6]:

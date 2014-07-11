@@ -19,3 +19,9 @@ class FrenchDeck(abc.MutableSequence):
 
     def __setitem__(self, position, card):
         self._cards[position] = card
+
+    def __delitem__(self, position):
+        del self._cards[position]
+
+    def insert(self, position, card):
+        self._cards.insert(position, card)

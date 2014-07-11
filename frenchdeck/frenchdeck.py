@@ -16,5 +16,5 @@ class FrenchDeck:
     def __getitem__(self, position):
         return self._cards[position]
 
-    def __setitem__(self, position, card):
-        self._cards[position] = card
+    # add method to enable a FrenchDeck instance to be 
+    # shuffled with random.shuffle below this line
