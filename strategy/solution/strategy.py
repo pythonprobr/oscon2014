@@ -1,19 +1,6 @@
 # strategy.py
 # Strategy pattern -- function-based implementation
 
-#####################################################################
-# Exercise 1
-#
-# Goal: make the STRATEGY_TESTS doctests pass
-#
-# Procedure:
-#
-# a) delete the Promotion class
-# b) change the Promotion subclasses into functions but preserve
-#    their docstrings
-# c) run `python3 -m doctest strategy.py -f` to check your work 
-#####################################################################
-
 """
 # BEGIN STRATEGY_TESTS
 
@@ -41,7 +28,6 @@
 """
 # BEGIN STRATEGY
 
-from abc import ABCMeta, abstractmethod
 from collections import namedtuple
 
 Customer = namedtuple('Customer', 'name fidelity')
@@ -74,7 +60,7 @@ class Order:  # the Context
         if self.promotion is None:
             discount = 0
         else:
-            discount = self.promotion.discount(self)
+            discount = self.promotion(self)  # <1>
         return self.total() - discount
 
     def __repr__(self):
@@ -82,38 +68,25 @@ class Order:  # the Context
         return fmt.format(self.total(), self.due())
 
 
-class Promotion(metaclass=ABCMeta):  # the Strategy
-
-    @abstractmethod
-    def discount(self, order):
-        """Return discount as an positive dollar amount"""
-
-
-class FidelityPromo(Promotion):  # first Concrete Strategy
+def fidelity_promo(order):  # <2>
     """5% discount for customers with 1000 or more fidelity points"""
-
-    def discount(self, order):
-        return order.total() * .05 if order.customer.fidelity >= 1000 else 0
+    return order.total() * .05 if order.customer.fidelity >= 1000 else 0
 
 
-class BulkItemPromo(Promotion):  # second Concrete Strategy
+def bulk_item_promo(order):
     """10% discount for each LineItem with 20 or more units"""
-
-    def discount(self, order):
-        discount = 0
-        for item in order.cart:
-            if item.quantity >= 20:
-                discount += item.total() * .1
-        return discount
+    discount = 0
+    for item in order.cart:
+        if item.quantity >= 20:
+            discount += item.total() * .1
+    return discount
 
 
-class LargeOrderPromo(Promotion):  # third Concrete Strategy
+def large_order_promo(order):
     """7% discount for orders with 10 or more distinct items"""
+    distinct_items = {item.product for item in order.cart}
+    if len(distinct_items) >= 10:
+        return order.total() * .07
+    return 0
 
-    def discount(self, order):
-        distinct_items = {item.product for item in order.cart}
-        if len(distinct_items) >= 10:
-            return order.total() * .07
-        return 0
-
-# END CLASSIC_STRATEGY
+# END STRATEGY
