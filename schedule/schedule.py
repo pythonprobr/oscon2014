@@ -5,17 +5,11 @@
 
     >>> talk = database['events'][34108]
     >>> talk  # doctest: +ELLIPSIS
-    <schedule.Event object at 0x...>
+    <schedule.Record object at 0x...>
     >>> talk.name
     'Idiomatic APIs with the Python Data Model'
     >>> talk.venue_serial
     1465
-    >>> talk.venue  # doctest: +ELLIPSIS
-    <schedule.Record object at 0x...>
-    >>> talk.venue.name
-    'E145'
-    >>> talk.first_speaker.name
-    'Luciano Ramalho'
 
 """
 
