@@ -2,7 +2,7 @@
 # Strategy pattern -- function-based implementation
 
 #####################################################################
-# Exercise 1
+# Exercise 2
 #
 # Goal: make the STRATEGY_TESTS doctests pass
 #
