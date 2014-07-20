@@ -25,13 +25,9 @@ import pickle
 SCHEDULE_NAME = 'schedule.pickle'
 
 
-def load(verbose=False):
+def load():
     with open(SCHEDULE_NAME, 'rb') as fp:
         schedule = pickle.load(fp)
-
-    if verbose:
-        for key, record_list in sorted(schedule.items()):
-            print('%12s: %3d items' % (key, len(record_list)))
 
     result = {}
     for collection in 'events', 'speakers', 'venues':
