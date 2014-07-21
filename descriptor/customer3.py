@@ -32,24 +32,28 @@ Assigning a blank e-mail later is not allowed either:
 """
 
 
+class NonBlank:
+
+    def __init__(self, storage_name):
+        self.storage_name = storage_name
+
+    def __set__(self, instance, value):
+        if not isinstance(value, str):
+            raise TypeError("%r must be of type 'str'" % self.storage_name)
+        elif len(value) == 0:
+            raise ValueError('%r must not be empty' % self.storage_name)
+        instance.__dict__[self.storage_name] = value
+
+
 class Customer:
+
+    name = NonBlank('name')
+    email = NonBlank('email')
 
     def __init__(self, name, email, fidelity=0):
         self.name = name
         self.email = email
         self.fidelity = fidelity
-
-    @property
-    def email(self):
-        return self.__email
-
-    @email.setter
-    def email(self, value):
-        if not isinstance(value, str):
-            raise TypeError("'email' must be of type 'str'")
-        elif len(value) == 0:
-            raise ValueError("'email' must not be empty")
-        self.__email = value
 
     def full_email(self):
         return '{0} <{1}>'.format(self.name, self.email)

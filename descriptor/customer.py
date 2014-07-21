@@ -13,6 +13,7 @@ A client with blank e-mail:
 
 """
 
+
 class Customer:
 
     def __init__(self, name, email, fidelity=0):
@@ -21,4 +22,4 @@ class Customer:
         self.fidelity = fidelity
 
     def full_email(self):
-        return '{name} <{email}>'.format(**vars(self))
+        return '{0} <{1}>'.format(self.name, self.email)
