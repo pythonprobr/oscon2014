@@ -15,6 +15,8 @@ A ``total`` method gives the total price for that line item::
     69.5
 
 """
+
+
 class LineItem:
 
     def __init__(self, product, quantity, price):
@@ -24,4 +26,3 @@ class LineItem:
 
     def total(self):
         return self.price * self.quantity
-        

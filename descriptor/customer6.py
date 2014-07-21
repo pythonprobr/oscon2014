@@ -51,15 +51,17 @@ class NonBlank:
         instance.__dict__[self.storage_name] = value
 
 
-def named_fields(cls):
-    for name, attr in cls.__dict__.items():
-        if isinstance(attr, NonBlank):
-            attr.storage_name = name
-    return cls
+class ModelMeta(type):
+
+    def __init__(cls, name, bases, dic):
+        super().__init__(name, bases, dic)
+
+        for name, attr in dic.items():
+            if isinstance(attr, NonBlank):
+                attr.storage_name = name
 
 
-@named_fields
-class Customer:
+class Customer(metaclass=ModelMeta):
 
     name = NonBlank()
     email = NonBlank()

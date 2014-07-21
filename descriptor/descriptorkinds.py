@@ -47,6 +47,7 @@ Methods are non-overriding descriptors:
 
 """
 
+
 class NonOverriding:
     def __get__(self, instance, cls):
         print('--> NonOverriding.__get__ invoked')
@@ -54,6 +55,7 @@ class NonOverriding:
             return self
         else:
             return 'value of an attribute in instance %r' % instance
+
 
 class Overriding:
     def __get__(self, instance, cls):
@@ -65,7 +67,7 @@ class Overriding:
 
     def __set__(self, instance, value):
         print('--> Overriding.__set__ invoked')
-        
+
 
 class Model:
     nonover = NonOverriding()
@@ -73,5 +75,3 @@ class Model:
 
     def spam(self):
         return 'result of calling .spam()'
-
-
