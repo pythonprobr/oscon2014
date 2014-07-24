@@ -40,13 +40,13 @@ Also, make our add work only with vectors:
 The default behavior of augmented assignment is the same as the simple
 operator followed by assigment (i.e. a new object is created):
 
-    >>> v1 = Vector(1, 1)
+    >>> v1 = Vector(1, 2)
     >>> id_of_v1 = id(v1)
     >>> v1 *= 3
     >>> v1
-    Vector(3, 3)
+    Vector(3, 6)
     >>> id(v1) == id_of_v1
-    False
+    True
 
 """
 
@@ -85,4 +85,11 @@ class Vector:
 
     def __rmul__(self, scalar):
         return self * scalar
+
+    def __imul__(self, scalar):
+        self.x *= scalar
+        self.y *= scalar
+        return self
+
+
 
