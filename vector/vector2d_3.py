@@ -22,10 +22,19 @@ Supported:
     >>> 3 * v
     Vector(9, 12)
 
+Solve the problem in vector2d v.0.2 by explicitly disallowing the use
+of * with two vectors:
+
+    >>> Vector(1, 2) * Vector(3, 4)
+    Traceback (most recent call last):
+      ...
+    TypeError: unsupported operand type(s) for *: 'Vector' and 'Vector'
+
 """
 
 
 from math import hypot
+from numbers import Real
 
 class Vector:
 
@@ -48,7 +57,10 @@ class Vector:
         return Vector(x, y)
 
     def __mul__(self, scalar):
-        return Vector(self.x * scalar, self.y * scalar)
+        if isinstance(scalar, Real):
+            return Vector(self.x * scalar, self.y * scalar)
+        else:
+            return NotImplemented
 
     def __rmul__(self, scalar):
         return self * scalar
