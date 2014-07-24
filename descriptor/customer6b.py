@@ -40,7 +40,6 @@ The `NonBlank` field values are stored in properly named
 
 """
 
-
 from model6b import Model, NonBlank
 
 
